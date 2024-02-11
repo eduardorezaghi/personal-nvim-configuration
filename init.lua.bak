@@ -114,9 +114,16 @@ require("lazy").setup({
         },
         {"mg979/vim-visual-multi", branch = "master"},
         "neovim/nvim-lspconfig",
-    },
+        "tpope/vim-fugitive",
+        "airblade/vim-gitgutter",
+        { "kdheepak/lazygit.nvim",
+            -- optional for floating window border decoration
+            dependencies = {
+                "nvim-lua/plenary.nvim",
+            },
+        },
+    }
 })
-
 
 
 -- Line numbers
@@ -133,13 +140,8 @@ vim.opt.backup = true
 vim.opt.backupext = '.bak'
 
 -- Map leader key to space
-vim.g.mapleader = ' '
-
--- Map split creation to <leader>ArrowKeys
-vim.api.nvim_set_keymap('n', '<leader><Left>', ':vsp<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader><Down>', ':sp<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader><Up>', ':sp<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader><Right>', ':vsp<CR>', { noremap = true })
+vim.g.mapleader = ' ' -- NVIM remap files
+vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', { noremap = true })
 
 -- Disable arrow keys
 vim.api.nvim_set_keymap('n', '<Up>', '<Nop>', { noremap = true })
@@ -148,12 +150,12 @@ vim.api.nvim_set_keymap('n', '<Left>', '<Nop>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<Right>', '<Nop>', { noremap = true })
 
 -- Move selected line / block of text in visual mode
--- vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==', { noremap = true })
--- vim.api.nvim_set_keymap('n', '<A-k>', ':m .-2<CR>==', { noremap = true })
--- vim.api.nvim_set_keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi', { noremap = true })
--- vim.api.nvim_set_keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi', { noremap = true })
--- vim.api.nvim_set_keymap('v', '<A-j>', ':m \'>+1<CR>gv=gv', { noremap = true })
--- vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-k>', ':m .-2<CR>==', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-j>', '<Esc>:m .+1<CR>==gi', { noremap = true })
+vim.api.nvim_set_keymap('i', '<A-k>', '<Esc>:m .-2<CR>==gi', { noremap = true })
+vim.api.nvim_set_keymap('v', '<A-j>', ':m \'>+1<CR>gv=gv', { noremap = true })
+vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true })
 
 -- Telescope
 vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true })
@@ -167,6 +169,12 @@ vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true })
+
+-- Use ALT + SHIFT + hjkl to create a split window
+vim.api.nvim_set_keymap('n', '<A-S-h>', '<C-w>s', { noremap = true }) -- Split window to the left
+vim.api.nvim_set_keymap('n', '<A-S-j>', '<C-w>v', { noremap = true }) -- Split window to the bottom
+vim.api.nvim_set_keymap('n', '<A-S-k>', '<C-w>s', { noremap = true }) -- Split window to the top
+vim.api.nvim_set_keymap('n', '<A-S-l>', '<C-w>v', { noremap = true }) -- Split window to the right
 
 -- Use CTRL + q to quit current window
 vim.api.nvim_set_keymap('n', '<C-q>', ':close<CR>', { noremap = true })

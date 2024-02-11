@@ -39,6 +39,11 @@
 -- --   syntax off            -- Disable syntax highlighting
 
 
+
+-- Map leader key to space
+vim.g.mapleader = ' '
+
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -52,79 +57,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Load the plugin
-require("lazy").setup({
-    {
-	"github/copilot.vim",
-        "nvim-lua/plenary.nvim",
-        { "nvim-treesitter/nvim-treesitter",
-            build = ":TSInstall",
-            config = function()
-                require('nvim-treesitter.configs').setup({
-                    ensure_installed = {
-                        "javascript",
-                        "typescript",
-                        "tsx",
-                        "json",
-                        "html",
-                        "css",
-                        "yaml",
-                        "lua",
-                        "python",
-                        "rust",
-                        "go",
-                        "java",
-                        "bash",
-                        "vim",
-                    },
-                    sync_install = false,
-                    highlight = {
-                        enable = true,
-                    },
-                })
-            end,
-        },
-        { "nvim-telescope/telescope.nvim",
-            tag = "0.1.5",
-            config = function()
-                require('telescope').setup({
-                    defaults = {
-                        file_ignore_patterns = { "node_modules", ".git" },
-                    },
-                })
-            end,
-        },
-        "preservim/nerdtree",
-        "ellisonleao/gruvbox.nvim",
-        { 'alexghergh/nvim-tmux-navigation', config = function()
-
-            local nvim_tmux_nav = require('nvim-tmux-navigation')
-        
-            nvim_tmux_nav.setup {
-                disable_when_zoomed = true -- defaults to false
-            }
-        
-            vim.keymap.set('n', "<M-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
-            vim.keymap.set('n', "<M-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
-            vim.keymap.set('n', "<M-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
-            vim.keymap.set('n', "<M-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
-            vim.keymap.set('n', "<M-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
-        
-        end
-        },
-        {"mg979/vim-visual-multi", branch = "master"},
-        "neovim/nvim-lspconfig",
-        "tpope/vim-fugitive",
-        "airblade/vim-gitgutter",
-        { "kdheepak/lazygit.nvim",
-            -- optional for floating window border decoration
-            dependencies = {
-                "nvim-lua/plenary.nvim",
-            },
-        },
-    }
-})
-
+-- Load the plugin, from lua/plugins.lua
+require("lazy").setup("plugins")
 
 
 -- Line numbers
@@ -140,8 +74,6 @@ vim.opt.autowrite = true
 vim.opt.backup = true
 vim.opt.backupext = '.bak'
 
--- Map leader key to space
-vim.g.mapleader = ' '
 
 -- NVIM remap files
 vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', { noremap = true })
@@ -174,6 +106,12 @@ vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true })
+
+-- Use ALT + SHIFT + hjkl to create a split window
+vim.api.nvim_set_keymap('n', '<A-S-h>', '<C-w>s', { noremap = true }) -- Split window to the left
+vim.api.nvim_set_keymap('n', '<A-S-j>', '<C-w>v', { noremap = true }) -- Split window to the bottom
+vim.api.nvim_set_keymap('n', '<A-S-k>', '<C-w>s', { noremap = true }) -- Split window to the top
+vim.api.nvim_set_keymap('n', '<A-S-l>', '<C-w>v', { noremap = true }) -- Split window to the right
 
 -- Use CTRL + q to quit current window
 vim.api.nvim_set_keymap('n', '<C-q>', ':close<CR>', { noremap = true })
