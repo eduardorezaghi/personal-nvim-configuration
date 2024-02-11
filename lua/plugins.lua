@@ -1,34 +1,8 @@
 return {
     {
-	"github/copilot.vim",
+	    "github/copilot.vim",
         "nvim-lua/plenary.nvim",
-        { "nvim-treesitter/nvim-treesitter",
-            build = ":TSInstall",
-            config = function()
-                require('nvim-treesitter.configs').setup({
-                    ensure_installed = {
-                        "javascript",
-                        "typescript",
-                        "tsx",
-                        "json",
-                        "html",
-                        "css",
-                        "yaml",
-                        "lua",
-                        "python",
-                        "rust",
-                        "go",
-                        "java",
-                        "bash",
-                        "vim",
-                    },
-                    sync_install = false,
-                    highlight = {
-                        enable = true,
-                    },
-                })
-            end,
-        },
+        {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
         { "nvim-telescope/telescope.nvim",
             tag = "0.1.5",
             config = function()
