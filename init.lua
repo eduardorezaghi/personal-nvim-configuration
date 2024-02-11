@@ -6,37 +6,6 @@
 --   - https://www.lua.org/pil/contents.html
 --   - https://learnxinyminutes.com/docs/lua/
 
--- local Plug = vim.fn['plug#']
-
--- -- Plugins
--- vim.call('plug#begin', '~/.config/nvim/plugged')
--- -- The default plugin directory will be as follows:
--- --   - Neovim (Linux/macOS/Windows): stdpath('data') .. '/plugged'
--- -- You can specify a custom plugin directory by passing it as the argument
--- --   - e.g. `vim.call('plug#begin', '~/.vim/plugged')`
--- --   - Avoid using standard Neovim directory names like 'plugin'
-
-
--- -- Make sure you use single quotes
--- Plug 'nvim-lua/plenary.nvim'
--- Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
--- Plug('nvim-telescope/telescope.nvim', { ['tag'] = '0.1.5' })
--- Plug 'preservim/nerdtree'
--- Plug 'ellisonleao/gruvbox.nvim'
--- Plug 'alexghergh/nvim-tmux-navigation'
--- Plug('mg979/vim-visual-multi', {['branch'] = 'master'})
-
--- -- Important: LSP provider
--- Plug 'neovim/nvim-lspconfig'
-
-
-
--- -- Initialize plugin system
--- -- Automatically executes `filetype plugin indent on` and `syntax enable`.
--- vim.call('plug#end')
--- -- You can revert the settings after the call like so:
--- --   filetype indent off   -- Disable file-type-specific indentation
--- --   syntax off            -- Disable syntax highlighting
 
 
 
