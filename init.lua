@@ -114,7 +114,15 @@ require("lazy").setup({
         },
         {"mg979/vim-visual-multi", branch = "master"},
         "neovim/nvim-lspconfig",
-    },
+        "tpope/vim-fugitive",
+        "airblade/vim-gitgutter",
+        { "kdheepak/lazygit.nvim",
+            -- optional for floating window border decoration
+            dependencies = {
+                "nvim-lua/plenary.nvim",
+            },
+        },
+    }
 })
 
 
@@ -159,6 +167,8 @@ vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { norem
 vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', { noremap = true })
 
+-- Lazygit
+vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>LazyGit<cr>', { noremap = true })
 -- Use CTRL + hjkl to move between windows (Vim only, not Tmux)
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true })
