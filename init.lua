@@ -12,6 +12,9 @@
 -- Map leader key to space
 vim.g.mapleader = ' '
 
+-- Disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -32,6 +35,7 @@ require("lazy").setup("plugins")
 
 -- Line numbers
 vim.opt.number = true
+vim.opt.relativenumber = true
 
 -- Set colorscheme
 vim.opt.background = 'dark'
@@ -84,4 +88,39 @@ vim.api.nvim_set_keymap('n', '<A-S-l>', '<C-w>v', { noremap = true }) -- Split w
 
 -- Use CTRL + q to quit current window
 vim.api.nvim_set_keymap('n', '<C-q>', ':close<CR>', { noremap = true })
+
+-- NVIM Tree
+vim.api.nvim_set_keymap('n', '<leader>nn', '<cmd>NvimTreeToggle<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>nr', '<cmd>NvimTreeRefresh<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>nf', '<cmd>NvimTreeFindFile<cr>', { noremap = true })
+
+
+-- Whichkey setup
+local wk = require("which-key")
+-- Create the following mappings:
+-- <leader>ff - Find file
+-- <leader>fg - Find string in files
+-- <leader>fb - Find open buffers
+-- <leader>fh - Find help tags
+-- <leader>fo - Find old files
+-- <C-n> - Next suggestion
+-- <C-p> - Previous suggestion
+-- <leader>gg - Lazygit
+-- <leader>nn - NvimTreeToggle
+-- <leader>nr - NvimTreeRefresh
+-- <leader>nf - NvimTreeFindFile
+
+wk.register({
+	["<leader>ff"] = { "<cmd>Telescope find_files<cr>", "Find file" },
+	["<leader>fg"] = { "<cmd>Telescope live_grep<cr>", "Find string in files" },
+	["<leader>fb"] = { "<cmd>Telescope buffers<cr>", "Find open buffers" },
+	["<leader>fh"] = { "<cmd>Telescope help_tags<cr>", "Find help tags" },
+	["<leader>fo"] = { "<cmd>Telescope oldfiles<cr>", "Find old files" },
+	["<C-n>"] = { "<cmd>lua require'completion'.next_item()<CR>", "Next suggestion" },
+	["<C-p>"] = { "<cmd>lua require'completion'.prev_item()<CR>", "Previous suggestion" },
+	["<leader>gg"] = { "<cmd>LazyGit<cr>", "Lazygit" },
+	["<leader>nn"] = { "<cmd>NvimTreeToggle<cr>", "NvimTreeToggle" },
+	["<leader>nr"] = { "<cmd>NvimTreeRefresh<cr>", "NvimTreeRefresh" },
+	["<leader>nf"] = { "<cmd>NvimTreeFindFile<cr>", "NvimTreeFindFile" },
+ })
 
