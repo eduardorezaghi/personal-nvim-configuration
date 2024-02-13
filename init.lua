@@ -8,7 +8,6 @@
 
 
 
-
 -- Map leader key to space
 vim.g.mapleader = ' '
 
@@ -33,6 +32,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
 
 
+
 -- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -47,6 +47,8 @@ vim.opt.autowrite = true
 vim.opt.backup = true
 vim.opt.backupext = '.bak'
 
+-- Highlight on yank
+vim.cmd('au TextYankPost * lua vim.highlight.on_yank {on_visual = true}')
 
 -- NVIM remap files
 vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', { noremap = true })

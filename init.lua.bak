@@ -33,6 +33,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
 
 
+
 -- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -47,6 +48,8 @@ vim.opt.autowrite = true
 vim.opt.backup = true
 vim.opt.backupext = '.bak'
 
+-- Highlight on yank
+vim.cmd('au TextYankPost * lua vim.highlight.on_yank {on_visual = true}')
 
 -- NVIM remap files
 vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', { noremap = true })
@@ -89,6 +92,12 @@ vim.api.nvim_set_keymap('n', '<A-S-l>', '<C-w>v', { noremap = true }) -- Split w
 -- Use CTRL + q to quit current window
 vim.api.nvim_set_keymap('n', '<C-q>', ':close<CR>', { noremap = true })
 
+-- NVIM Tree
+vim.api.nvim_set_keymap('n', '<leader>nn', '<cmd>NvimTreeToggle<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>nr', '<cmd>NvimTreeRefresh<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>nf', '<cmd>NvimTreeFindFile<cr>', { noremap = true })
+
+
 -- Whichkey setup
 local wk = require("which-key")
 -- Create the following mappings:
@@ -100,7 +109,9 @@ local wk = require("which-key")
 -- <C-n> - Next suggestion
 -- <C-p> - Previous suggestion
 -- <leader>gg - Lazygit
--- <C-S-n> - NvimTreeToggle
+-- <leader>nn - NvimTreeToggle
+-- <leader>nr - NvimTreeRefresh
+-- <leader>nf - NvimTreeFindFile
 
 wk.register({
 	["<leader>ff"] = { "<cmd>Telescope find_files<cr>", "Find file" },
@@ -111,5 +122,8 @@ wk.register({
 	["<C-n>"] = { "<cmd>lua require'completion'.next_item()<CR>", "Next suggestion" },
 	["<C-p>"] = { "<cmd>lua require'completion'.prev_item()<CR>", "Previous suggestion" },
 	["<leader>gg"] = { "<cmd>LazyGit<cr>", "Lazygit" },
+	["<leader>nn"] = { "<cmd>NvimTreeToggle<cr>", "NvimTreeToggle" },
+	["<leader>nr"] = { "<cmd>NvimTreeRefresh<cr>", "NvimTreeRefresh" },
+	["<leader>nf"] = { "<cmd>NvimTreeFindFile<cr>", "NvimTreeFindFile" },
  })
 

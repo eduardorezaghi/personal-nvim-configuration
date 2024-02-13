@@ -13,7 +13,34 @@ end
 
 return {
     {
-	    "github/copilot.vim",
+       "github/copilot.vim",
+        {
+            "neovim/nvim-lspconfig",
+            lazy = false,
+            config = function()
+              local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        
+              local lspconfig = require("lspconfig")
+              lspconfig.tsserver.setup({
+                capabilities = capabilities
+              })
+              lspconfig.html.setup({
+                capabilities = capabilities
+              })
+              lspconfig.lua_ls.setup({
+                capabilities = capabilities
+              })
+
+	      lspconfig.java_language_server.setup({
+		capabilities = capabilities
+	      })
+        
+              vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+              vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
+              vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
+              vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+            end,
+          },
         "nvim-lua/plenary.nvim",
         {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
         { "nvim-telescope/telescope.nvim",
@@ -45,7 +72,6 @@ return {
         end
         },
         {"mg979/vim-visual-multi", branch = "master"},
-        "neovim/nvim-lspconfig",
         "tpope/vim-fugitive",
 	{ "lewis6991/gitsigns.nvim", 
 	  config = function()
@@ -54,41 +80,82 @@ return {
 	    }
 	  end
 	},
-        { "kdheepak/lazygit.nvim",
+    {
+        "williamboman/mason.nvim",
+        lazy = false,
+        config = function()
+            require("mason").setup({
+                PATH = "prepend",
+            })
+        end,
+      },
+      {
+        "williamboman/mason-lspconfig.nvim",
+        lazy = false,
+        opts = {
+          auto_install = true,
+          config = function()
+          require("mason-lspconfig").setup({
+            ensure_installed = {
+                "lua_ls",
+                "tsserver",
+                "html",
+
+            },
+          })
+          end,
+        },
+      },
+
+    { "kdheepak/lazygit.nvim",
             -- optional for floating window border decoration
             dependencies = {
                 "nvim-lua/plenary.nvim",
             },
         },
-	{ "hrsh7th/nvim-cmp",
-	    config = function()
-		local cmp = require('cmp')
-		cmp.setup({
-		    snippet = {
-			expand = function(args)
-			    vim.fn["vsnip#anonymous"](args.body)
-			end,
-		    },
-		    mapping = {
-			['<C-p>'] = cmp.mapping.select_prev_item(),
-			['<C-n>'] = cmp.mapping.select_next_item(),
-			['<C-d>'] = cmp.mapping.scroll_docs(-4),
-			['<C-f>'] = cmp.mapping.scroll_docs(4),
-			['<C-Space>'] = cmp.mapping.complete(),
-			['<C-e>'] = cmp.mapping.close(),
-			['<CR>'] = cmp.mapping.confirm({
-			    behavior = cmp.ConfirmBehavior.Insert,
-			    select = true,
-			}),
-		    },
-		    sources = {
-			{ name = 'nvim_lsp' },
-			{ name = 'vsnip' },
-			{ name = 'buffer' },
-		    },
-		})
-	    end,
+    { "hrsh7th/cmp-nvim-lsp" },
+	{
+        "L3MON4D3/LuaSnip",
+        -- follow latest release.
+        version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        -- install jsregexp (optional!).
+        build = "make install_jsregexp",
+        dependencies = {
+            "rafamadriz/friendly-snippets",
+        },
 	},
+    {
+        "hrsh7th/nvim-cmp",
+        config = function()
+          local cmp = require("cmp")
+          require("luasnip.loaders.from_vscode").lazy_load()
+    
+          cmp.setup({
+            snippet = {
+              expand = function(args)
+                require("luasnip").lsp_expand(args.body)
+              end,
+            },
+            window = {
+              completion = cmp.config.window.bordered(),
+              documentation = cmp.config.window.bordered(),
+            },
+            mapping = cmp.mapping.preset.insert({
+              ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+              ["<C-f>"] = cmp.mapping.scroll_docs(4),
+              ["<C-Space>"] = cmp.mapping.complete(),
+              ["<C-e>"] = cmp.mapping.abort(),
+              ["<CR>"] = cmp.mapping.confirm({ select = true }),
+            }),
+            sources = cmp.config.sources({
+              { name = "nvim_lsp" },
+              { name = "luasnip" }, -- For luasnip users.
+            }, {
+              { name = "buffer" },
+            }),
+          })
+        end,
+      },
 	{ "nvim-tree/nvim-tree.lua",
 	    version = "*",
 	    lazy = false,
