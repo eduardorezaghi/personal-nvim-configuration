@@ -6,15 +6,11 @@
 --   - https://www.lua.org/pil/contents.html
 --   - https://learnxinyminutes.com/docs/lua/
 
-
-
+--------------------------------------------------------------------------------
 -- Map leader key to space
 vim.g.mapleader = ' '
 
--- Disable netrw
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
+-- Lazy.nvim setup
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -30,34 +26,62 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Load the plugin, from lua/plugins.lua
 require("lazy").setup("plugins")
+--------------------------------------------------------------------------------
 
+
+-- Disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- Base VIM configuration.
+vim.opt.softtabstop = 2 -- Indent by 2 spaces when hitting tab
+vim.opt.shiftwidth = 4 -- Indent by 4 spaces when auto-indenting
+vim.opt.tabstop = 4 -- Show existing tab with 4 spaces width
+
+vim.opt.cursorline = true -- Highlight the current line
+vim.opt.cursorcolumn = true -- Highlight the current column
+vim.cmd([[highlight CursorLine guibg=lightblue ctermbg=lightgrey]])
+-- Highlight on yank
+vim.cmd('au TextYankPost * lua vim.highlight.on_yank {on_visual = true}')
+
+vim.opt.history = 1000 -- Keep a history of 1000 commands
+vim.opt.ruler = true -- Show the cursor position all the time
+vim.opt.relativenumber = true -- Show line numbers relative to the current line
+vim.opt.mouse = "a" -- Enable mouse support
+vim.opt.autoindent = true -- Automatically indent new lines
+vim.opt.backup = false -- Disable backup files
+vim.opt.laststatus = 2 -- Always show the status line
+vim.opt.wildmenu = true -- Enable enhanced command-line completion
+
+-- Search options
+vim.opt.incsearch = true -- Incremental search
+vim.opt.hlsearch = true -- Highlight search results
+vim.opt.ignorecase = true -- Ignore case when searching
+vim.opt.smartcase = true -- Ignore case when searching, unless an uppercase letter is used
+
+vim.cmd([[syntax on]]) -- Enable syntax highlighting
+vim.cmd([[filetype plugin indent on]]) -- Enable filetype-specific plugins and indenting
+
+-- Persistent undo
+vim.opt.undodir = "~/.vim/undodir"
+vim.opt.undofile = true
 
 
 -- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- Set colorscheme
+-- Colorscheme settings.
 vim.opt.background = 'dark'
 vim.cmd([[colorscheme gruvbox]])
 
 vim.opt.filetype = 'on'
-vim.opt.history = 1000
 vim.opt.autowrite = true
-vim.opt.backup = true
-vim.opt.backupext = '.bak'
 
--- Highlight on yank
-vim.cmd('au TextYankPost * lua vim.highlight.on_yank {on_visual = true}')
 
+-- Neovim API configuration.
 -- NVIM remap files
 vim.api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', { noremap = true })
-
--- Disable arrow keys
-vim.api.nvim_set_keymap('n', '<Up>', '<Nop>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<Down>', '<Nop>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<Left>', '<Nop>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<Right>', '<Nop>', { noremap = true })
 
 -- Move selected line / block of text in visual mode
 vim.api.nvim_set_keymap('n', '<A-j>', ':m .+1<CR>==', { noremap = true })
@@ -113,16 +137,25 @@ local wk = require("which-key")
 -- <leader>nf - NvimTreeFindFile
 
 wk.register({
-	["<leader>ff"] = { "<cmd>Telescope find_files<cr>", "Find file" },
-	["<leader>fg"] = { "<cmd>Telescope live_grep<cr>", "Find string in files" },
-	["<leader>fb"] = { "<cmd>Telescope buffers<cr>", "Find open buffers" },
-	["<leader>fh"] = { "<cmd>Telescope help_tags<cr>", "Find help tags" },
-	["<leader>fo"] = { "<cmd>Telescope oldfiles<cr>", "Find old files" },
+	["<leader>f"] = {
+		name = "+Find",
+		["f"] = { "<cmd>Telescope find_files<cr>", "Find file" },
+		["g"] = { "<cmd>Telescope live_grep<cr>", "Find string in files" },
+		["b"] = { "<cmd>Telescope buffers<cr>", "Find open buffers" },
+		["h"] = { "<cmd>Telescope help_tags<cr>", "Find help tags" },
+		["o"] = { "<cmd>Telescope oldfiles<cr>", "Find old files" },
+	},
 	["<C-n>"] = { "<cmd>lua require'completion'.next_item()<CR>", "Next suggestion" },
 	["<C-p>"] = { "<cmd>lua require'completion'.prev_item()<CR>", "Previous suggestion" },
-	["<leader>gg"] = { "<cmd>LazyGit<cr>", "Lazygit" },
-	["<leader>nn"] = { "<cmd>NvimTreeToggle<cr>", "NvimTreeToggle" },
-	["<leader>nr"] = { "<cmd>NvimTreeRefresh<cr>", "NvimTreeRefresh" },
-	["<leader>nf"] = { "<cmd>NvimTreeFindFile<cr>", "NvimTreeFindFile" },
+	["<leader>g"] = {
+		name = "+Git",
+		["g"] = { "<cmd>LazyGit<cr>", "Lazygit" },
+	},
+	["<leader>n"] = {
+		name = "+NvimTree",
+		["n"] = { "<cmd>NvimTreeToggle<cr>", "NvimTreeToggle" },
+		["r"] = { "<cmd>NvimTreeRefresh<cr>", "NvimTreeRefresh" },
+		["f"] = { "<cmd>NvimTreeFindFile<cr>", "NvimTreeFindFile" },
+	},
  })
 
