@@ -55,6 +55,10 @@ return {
             tag = "0.1.5",
             config = function()
                 require('telescope').setup({
+				    opts = {
+					      defaults = { layout_config = { horizontal = { preview_cutoff =  0 } } },
+					      pickers = { colorscheme = { enable_preview = true } },
+				    },
                     defaults = {
                         file_ignore_patterns = { "node_modules", ".git" },
                     },
@@ -70,6 +74,7 @@ return {
             config = function()
                 require('gitsigns').setup {
                     current_line_blame = true,
+					current_line_blame_formatter = '<author> • <author_time:%d/%m/%Y %H:%M> • <summary>',
                 }
             end
         },

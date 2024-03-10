@@ -40,7 +40,7 @@ vim.opt.tabstop = 4 -- Show existing tab with 4 spaces width
 
 vim.opt.cursorline = true -- Highlight the current line
 vim.opt.cursorcolumn = true -- Highlight the current column
-vim.cmd([[highlight CursorLine guibg=lightblue ctermbg=lightgrey]])
+vim.cmd([[highlight CursorLine guibg=lightyellow ctermbg=lightgrey]])
 -- Highlight on yank
 vim.cmd('au TextYankPost * lua vim.highlight.on_yank {on_visual = true}')
 
@@ -97,6 +97,7 @@ vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { nor
 vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>uc', '<cmd>Telescope colorscheme<cr>', { noremap = true })
 
 -- Lazygit
 vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>LazyGit<cr>', { noremap = true })
@@ -119,6 +120,37 @@ vim.api.nvim_set_keymap('n', '<C-q>', ':close<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>nn', '<cmd>NvimTreeToggle<cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>nr', '<cmd>NvimTreeRefresh<cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>nf', '<cmd>NvimTreeFindFile<cr>', { noremap = true })
+
+-- Copilot
+vim.api.nvim_set_keymap('n', '<leader>cc', '<cmd>Copilot<cr>', { noremap = true })
+
+-- Whichkey
+vim.api.nvim_set_keymap('n', '<leader>', ':WhichKey<CR>', { noremap = true })
+
+-- LSP
+vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', 'ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>ws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', { noremap = true })
+
+-- LSP Saga
+vim.api.nvim_set_keymap('n', 'gh', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>ca', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', { noremap = true })
+vim.api.nvim_set_keymap('v', '<leader>ca', '<cmd><C-U>lua require("lspsaga.codeaction").range_code_action()<CR>', { noremap = true })
+
+-- Gitsign
+---- Stage current hunk (line)
+vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>lua require"gitsigns".stage_hunk()<CR>', { noremap = true })
+---- Undo stage current hunk (line)
+vim.api.nvim_set_keymap('n', '<leader>gu', '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>', { noremap = true })
+---- Preview changes
+vim.api.nvim_set_keymap('n', '<leader>gp', '<cmd>lua require"gitsigns".preview_hunk()<CR>', { noremap = true })
+---- Toggle line git blame
+vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>lua require"gitsigns".blame_line()<CR>', { noremap = true })
 
 
 -- Whichkey setup
