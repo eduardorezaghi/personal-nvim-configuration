@@ -14,6 +14,7 @@ end
 return {
   {
     "github/copilot.vim",
+    "nvim-lua/completion-nvim",
     {
       "neovim/nvim-lspconfig",
       lazy = false,
@@ -65,13 +66,19 @@ return {
             defaults = { layout_config = { horizontal = { preview_cutoff = 0 } } },
             pickers = { colorscheme = { enable_preview = true } },
           },
+          dependencies = {
+            "nvim-lua/popup.nvim",
+            "nvim-lua/plenary.nvim",
+          },
           defaults = {
             file_ignore_patterns = { "node_modules", ".git" },
           },
         })
       end,
     },
-    "preservim/nerdtree",
+    {
+      "nvim-telescope/telescope-file-browser.nvim",
+    },
     "ellisonleao/gruvbox.nvim",
     { "mg979/vim-visual-multi",          branch = "master" },
     "tpope/vim-fugitive",

@@ -40,7 +40,8 @@ vim.opt.tabstop = 4 -- Show existing tab with 4 spaces width
 
 vim.opt.cursorline = true -- Highlight the current line
 vim.opt.cursorcolumn = true -- Highlight the current column
-vim.cmd([[highlight CursorLine guibg=lightyellow ctermbg=lightgrey]])
+-- Dark blue cursor line
+vim.cmd([[highlight CursorLine guibg=#3e577d]])
 -- Highlight on yank
 vim.cmd('au TextYankPost * lua vim.highlight.on_yank {on_visual = true}')
 
@@ -63,7 +64,7 @@ vim.cmd([[syntax on]]) -- Enable syntax highlighting
 vim.cmd([[filetype plugin indent on]]) -- Enable filetype-specific plugins and indenting
 
 -- Persistent undo
-vim.opt.undodir = "~/.vim/undodir"
+-- For Neovim, opt.undodir is not needed, as it is set by default to $XDG_DATA_HOME/nvim/undo.
 vim.opt.undofile = true
 
 
@@ -73,7 +74,6 @@ vim.opt.relativenumber = true
 
 -- Colorscheme settings.
 vim.opt.background = 'dark'
-vim.cmd([[colorscheme gruvbox]])
 
 vim.opt.filetype = 'on'
 vim.opt.autowrite = true
@@ -93,6 +93,7 @@ vim.api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true })
 
 -- Telescope
 vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>Telescope file_browser<cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true })
@@ -142,7 +143,12 @@ vim.api.nvim_set_keymap('n', 'gh', '<cmd>lua require("lspsaga.provider").lsp_fin
 vim.api.nvim_set_keymap('n', '<leader>ca', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', { noremap = true })
 vim.api.nvim_set_keymap('v', '<leader>ca', '<cmd><C-U>lua require("lspsaga.codeaction").range_code_action()<CR>', { noremap = true })
 
+
 -- Gitsign
+---- Next hunk
+vim.api.nvim_set_keymap('n', '<leader>gn', '<cmd>lua require"gitsigns".next_hunk()<CR>', { noremap = true })
+---- Previous hunk
+vim.api.nvim_set_keymap('n', '<leader>gm', '<cmd>lua require"gitsigns".prev_hunk()<CR>', { noremap = true })
 ---- Stage current hunk (line)
 vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>lua require"gitsigns".stage_hunk()<CR>', { noremap = true })
 ---- Undo stage current hunk (line)
@@ -150,25 +156,33 @@ vim.api.nvim_set_keymap('n', '<leader>gu', '<cmd>lua require"gitsigns".undo_stag
 ---- Preview changes
 vim.api.nvim_set_keymap('n', '<leader>gp', '<cmd>lua require"gitsigns".preview_hunk()<CR>', { noremap = true })
 ---- Toggle line git blame
-vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>lua require"gitsigns".blame_line()<CR>', { noremap = true })
-
+vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>', { noremap = true })
+--- Toggle diff view
+vim.api.nvim_set_keymap('n', '<leader>gd', '<cmd>lua require"gitsigns".diffthis()<CR>', { noremap = true })
 
 -- Whichkey setup
 local wk = require("which-key")
 -- Create the following mappings:
 -- <leader>ff - Find file
+-- <leader>e - File browser
 -- <leader>fg - Find string in files
 -- <leader>fb - Find open buffers
 -- <leader>fh - Find help tags
 -- <leader>fo - Find old files
--- <C-n> - Next suggestion
--- <C-p> - Previous suggestion
 -- <leader>gg - Lazygit
 -- <leader>nn - NvimTreeToggle
 -- <leader>nr - NvimTreeRefresh
 -- <leader>nf - NvimTreeFindFile
 
 wk.register({
+    ["<leader>"] = {
+        name = "+Leader",
+        ["c"] = { "<cmd>Copilot<cr>", "Copilot" },
+    },
+    ["<leader>e"] = {
+        name = "+Explorer",
+        ["e"] = { "<cmd>Telescope file_browser<cr>", "File browser" },
+    },
 	["<leader>f"] = {
 		name = "+Find",
 		["f"] = { "<cmd>Telescope find_files<cr>", "Find file" },
@@ -177,11 +191,13 @@ wk.register({
 		["h"] = { "<cmd>Telescope help_tags<cr>", "Find help tags" },
 		["o"] = { "<cmd>Telescope oldfiles<cr>", "Find old files" },
 	},
-	["<C-n>"] = { "<cmd>lua require'completion'.next_item()<CR>", "Next suggestion" },
-	["<C-p>"] = { "<cmd>lua require'completion'.prev_item()<CR>", "Previous suggestion" },
 	["<leader>g"] = {
 		name = "+Git",
 		["g"] = { "<cmd>LazyGit<cr>", "Lazygit" },
+		["s"] = { "<cmd>lua require'gitsigns'.stage_hunk()<cr>", "Stage hunk" },
+		["u"] = { "<cmd>lua require'gitsigns'.undo_stage_hunk()<cr>", "Undo stage hunk" },
+		["p"] = { "<cmd>lua require'gitsigns'.preview_hunk()<cr>", "Preview hunk" },
+		["b"] = { "<cmd>lua require'gitsigns'.blame_line()<cr>", "Blame line" },
 	},
 	["<leader>n"] = {
 		name = "+NvimTree",
