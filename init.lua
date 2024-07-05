@@ -100,6 +100,7 @@ vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { norem
 vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>uc', '<cmd>Telescope colorscheme<cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>r', '<cmd>Telescope registers<cr>', { noremap = true })
 
 -- Lazygit
 vim.api.nvim_set_keymap('n', '<leader>gg', '<cmd>LazyGit<cr>', { noremap = true })
@@ -170,6 +171,8 @@ local wk = require("which-key")
 -- <leader>fb - Find open buffers
 -- <leader>fh - Find help tags
 -- <leader>fo - Find old files
+-- <leader>uc - Change colorscheme
+-- <leader>r - Show registers
 -- <leader>gg - Lazygit
 -- <leader>nn - NvimTreeToggle
 -- <leader>nr - NvimTreeRefresh
@@ -191,6 +194,8 @@ wk.register({
 		["b"] = { "<cmd>Telescope buffers<cr>", "Find open buffers" },
 		["h"] = { "<cmd>Telescope help_tags<cr>", "Find help tags" },
 		["o"] = { "<cmd>Telescope oldfiles<cr>", "Find old files" },
+		["c"] = { "<cmd>Telescope colorscheme<cr>", "Change colorscheme" },
+		["r"] = { "<cmd>Telescope registers<cr>", "Show registers" },
 	},
 	["<leader>g"] = {
 		name = "+Git",
