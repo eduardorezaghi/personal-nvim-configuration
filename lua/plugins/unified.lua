@@ -1,35 +1,43 @@
-local function my_on_attach(bufnr)
-  local api = require "nvim-tree.api"
-
-  local function opts(desc)
-    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-  end
-
-  -- default mappings
-  api.config.mappings.default_on_attach(bufnr)
-end
-
-
-
 return {
+    {
+        "williamboman/mason.nvim",
+        lazy = false,
+        config = function()
+          require("mason").setup({
+            PATH = "prepend",
+          })
+        end,
+      },
+      {
+        "williamboman/mason-lspconfig.nvim",
+        lazy = false,
+        opts = {
+          auto_install = true,
+          config = function()
+            require("mason-lspconfig").setup({
+              ensure_installed = {
+                "lua_ls",
+                "luaformatter",
+                "tsserver",
+                "html",
+              },
+            })
+          end,
+        },
+      },
   {
     "github/copilot.vim",
-    "nvim-lua/completion-nvim",
+    { "folke/neodev.nvim", opts = {} },
     {
       "neovim/nvim-lspconfig",
       lazy = false,
       config = function()
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
         local lspconfig = require("lspconfig")
-        lspconfig.tsserver.setup({
-          capabilities = capabilities
-        })
-        lspconfig.html.setup({
-          capabilities = capabilities
-        })
-        lspconfig.lua_ls.setup({
-          capabilities = capabilities,
+		lspconfig.pyright.setup({ capabilities = capabilities })
+        lspconfig.tsserver.setup({ capabilities = capabilities })
+        lspconfig.html.setup({ capabilities = capabilities })
+        lspconfig.lua_ls.setup({ capabilities = capabilities,
           settings = {
             Lua = {
               diagnostics = {
@@ -37,29 +45,19 @@ return {
               },
               format = {
                 enable = true,
-                formatter = "lua-format",
-                args = { "--indent-width=4", "--no-keep-simple-function-one-liner" },
                 save = true,
               },
             },
           },
         })
-
-        lspconfig.java_language_server.setup({
-          capabilities = capabilities
-        })
-
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-        vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
-        vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
-        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+        lspconfig.java_language_server.setup({ capabilities = capabilities })
       end,
     },
     "nvim-lua/plenary.nvim",
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
     {
       "nvim-telescope/telescope.nvim",
-      tag = "0.1.5",
+          tag = "0.1.5",
       config = function()
         require('telescope').setup({
           opts = {
@@ -91,33 +89,6 @@ return {
         }
       end
     },
-    {
-      "williamboman/mason.nvim",
-      lazy = false,
-      config = function()
-        require("mason").setup({
-          PATH = "prepend",
-        })
-      end,
-    },
-    {
-      "williamboman/mason-lspconfig.nvim",
-      lazy = false,
-      opts = {
-        auto_install = true,
-        config = function()
-          require("mason-lspconfig").setup({
-            ensure_installed = {
-              "lua_ls",
-              "lua_format",
-              "tsserver",
-              "html",
-            },
-          })
-        end,
-      },
-    },
-
     {
       "kdheepak/lazygit.nvim",
       -- optional for floating window border decoration
@@ -183,7 +154,16 @@ return {
           diagnostics = {
             enable = true,
           },
-          on_attach = my_on_attach,
+          on_attach = function ()
+            local api = require "nvim-tree.api"
+
+            local function opts(desc)
+              return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+            end
+
+            -- default mappings
+            api.config.mappings.default_on_attach(bufnr)
+          end
         }
       end,
     },
