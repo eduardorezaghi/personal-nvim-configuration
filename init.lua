@@ -32,6 +32,7 @@ require("lazy").setup("plugins")
 -- Disable netrw
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g.clipboard = "unnamedplus"
 
 -- Base VIM configuration.
 vim.opt.softtabstop = 2 -- Indent by 2 spaces when hitting tab
