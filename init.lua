@@ -33,6 +33,8 @@ require("lazy").setup("plugins")
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.clipboard = "unnamedplus"
+-- Uses Neovim opt feature to define clipboard.
+vim.opt.clipboard = "unnamedplus"
 
 -- Base VIM configuration.
 vim.opt.softtabstop = 2 -- Indent by 2 spaces when hitting tab
@@ -79,6 +81,30 @@ vim.opt.background = 'dark'
 vim.opt.filetype = 'on'
 vim.opt.autowrite = true
 
+if vim.fn.has("wsl") == 1 then
+    if vim.fn.executable("wl-copy") == 0 then
+        print("wl-clipboard not found, clipboard integration won't work")
+    else
+        vim.g.clipboard = {
+            name = "wl-clipboard (wsl)",
+            copy = {
+                ["+"] = 'wl-copy --foreground --type text/plain',
+                ["*"] = 'wl-copy --foreground --primary --type text/plain',
+            },
+            paste = {
+                ["+"] = (function()
+                    return vim.fn.systemlist('wl-paste --no-newline|sed -e "s/\r$//"', {''}, 1) -- '1' keeps empty lines
+                end),
+                ["*"] = (function() 
+                    return vim.fn.systemlist('wl-paste --primary --no-newline|sed -e "s/\r$//"', {''}, 1)
+                end),
+            },
+            cache_enabled = true
+        }
+    end
+end
+
+--------------------------------------------------------------------------------
 
 -- Neovim API configuration.
 -- NVIM remap files
@@ -182,6 +208,7 @@ wk.register({
     ["<leader>"] = {
         name = "+Leader",
         ["c"] = { "<cmd>Copilot<cr>", "Copilot" },
+		["e"] = { "<cmd>Telescope file_browser<cr>", "File browser" },
     },
     ["<leader>e"] = {
         name = "+Explorer",

@@ -9,19 +9,53 @@ local function my_on_attach(bufnr)
   api.config.mappings.default_on_attach(bufnr)
 end
 
-
-
 return {
   {
     "github/copilot.vim",
+    {
+      "williamboman/mason.nvim",
+      lazy = false,
+      config = function()
+        require("mason").setup({
+          PATH = "prepend",
+        })
+      end,
+    },
+    {
+      "williamboman/mason-lspconfig.nvim",
+      lazy = false,
+      opts = {
+        auto_install = true,
+        config = function()
+          require("mason-lspconfig").setup({
+            ensure_installed = {
+              "lua_ls",
+              "lua_format",
+              "tsserver",
+              "html",
+            },
+          })
+        end,
+      },
+    { "hrsh7th/cmp-nvim-lsp" },
     "nvim-lua/completion-nvim",
     {
       "neovim/nvim-lspconfig",
       lazy = false,
       config = function()
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
         local lspconfig = require("lspconfig")
+        -- Python
+        lspconfig.pyright.setup({
+          capabilities = capabilities,
+          settings = {
+            python = {
+              analysis = {
+                typeCheckingMode = "basic",
+              },
+            },
+          },
+        })
         lspconfig.tsserver.setup({
           capabilities = capabilities
         })
@@ -55,6 +89,31 @@ return {
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
       end,
     },
+    {
+        "jose-elias-alvarez/null-ls.nvim",
+        config = function()
+          local null_ls = require("null-ls")
+          null_ls.setup({
+            sources = {
+              null_ls.builtins.formatting.prettier,
+              null_ls.builtins.formatting.black,
+              -- Add more formatters/linters as needed
+            },
+            -- Optional settings:
+            on_attach = function(client, bufnr)
+              if client.supports_method("textDocument/formatting") then
+                vim.api.nvim_clear_auto_create_autocmd("BufWritePre", {
+                  group = augroup,
+                  buffer = bufnr,
+                  callback = function()
+                    vim.lsp.buf.format({ bufnr = bufnr })
+                  end,
+                })
+              end
+            end,
+          })
+        end
+      },
     "nvim-lua/plenary.nvim",
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
     {
@@ -91,31 +150,7 @@ return {
         }
       end
     },
-    {
-      "williamboman/mason.nvim",
-      lazy = false,
-      config = function()
-        require("mason").setup({
-          PATH = "prepend",
-        })
-      end,
-    },
-    {
-      "williamboman/mason-lspconfig.nvim",
-      lazy = false,
-      opts = {
-        auto_install = true,
-        config = function()
-          require("mason-lspconfig").setup({
-            ensure_installed = {
-              "lua_ls",
-              "lua_format",
-              "tsserver",
-              "html",
-            },
-          })
-        end,
-      },
+
     },
 
     {
@@ -125,7 +160,7 @@ return {
         "nvim-lua/plenary.nvim",
       },
     },
-    { "hrsh7th/cmp-nvim-lsp" },
+
     {
       "L3MON4D3/LuaSnip",
       -- follow latest release.
