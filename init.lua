@@ -34,13 +34,15 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.clipboard = "unnamedplus"
 -- Uses Neovim opt feature to define clipboard.
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard:append("unnamedplus")
 
 -- Base VIM configuration.
 vim.opt.softtabstop = 2 -- Indent by 2 spaces when hitting tab
 vim.opt.shiftwidth = 4 -- Indent by 4 spaces when auto-indenting
 vim.opt.tabstop = 4 -- Show existing tab with 4 spaces width
+vim.opt.wrap = false -- Wrap lines
 
+vim.opt.termguicolors = true -- True color support
 vim.opt.cursorline = true -- Highlight the current line
 vim.opt.cursorcolumn = true -- Highlight the current column
 -- Dark blue cursor line
@@ -56,6 +58,7 @@ vim.opt.autoindent = true -- Automatically indent new lines
 vim.opt.backup = false -- Disable backup files
 vim.opt.laststatus = 2 -- Always show the status line
 vim.opt.wildmenu = true -- Enable enhanced command-line completion
+vim.opt.backspace = "indent,eol,start" -- Allow backspacing over everything in insert mode
 
 -- Search options
 vim.opt.incsearch = true -- Incremental search
