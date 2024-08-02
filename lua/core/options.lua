@@ -5,11 +5,15 @@ local cmd = vim.cmd
 -- Disable netrw
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
+vim.g.clipboard = "unnamedplus"
+-- Uses Neovim opt feature to define clipboard.
+vim.opt.clipboard:append("unnamedplus")
 
 -- Base VIM configuration.
 opt.softtabstop = 2 -- Indent by 2 spaces when hitting tab
 opt.shiftwidth = 4 -- Indent by 4 spaces when auto-indenting
 opt.tabstop = 4 -- Show existing tab with 4 spaces width
+vim.opt.wrap = false -- Wrap lines
 
 opt.cursorline = true -- Highlight the current line
 opt.cursorcolumn = true -- Highlight the current column
@@ -26,6 +30,8 @@ opt.autoindent = true -- Automatically indent new lines
 opt.backup = false -- Disable backup files
 opt.laststatus = 2 -- Always show the status line
 opt.wildmenu = true -- Enable enhanced command-line completion
+vim.opt.backspace = "indent,eol,start" -- Allow backspacing over everything in insert mode
+
 
 -- Search options
 opt.incsearch = true -- Incremental search
@@ -50,3 +56,26 @@ opt.background = 'dark'
 
 opt.filetype = 'on'
 opt.autowrite = true
+
+if vim.fn.has("wsl") == 1 then
+    if vim.fn.executable("wl-copy") == 0 then
+        print("wl-clipboard not found, clipboard integration won't work")
+    else
+        vim.g.clipboard = {
+            name = "wl-clipboard (wsl)",
+            copy = {
+                ["+"] = 'wl-copy --foreground --type text/plain',
+                ["*"] = 'wl-copy --foreground --primary --type text/plain',
+            },
+            paste = {
+                ["+"] = (function()
+                    return vim.fn.systemlist('wl-paste --no-newline|sed -e "s/\r$//"', {''}, 1) -- '1' keeps empty lines
+                end),
+                ["*"] = (function() 
+                    return vim.fn.systemlist('wl-paste --primary --no-newline|sed -e "s/\r$//"', {''}, 1)
+                end),
+            },
+            cache_enabled = true
+        }
+    end
+end

@@ -53,6 +53,31 @@ return {
         lspconfig.java_language_server.setup({ capabilities = capabilities })
       end,
     },
+    {
+        "jose-elias-alvarez/null-ls.nvim",
+        config = function()
+          local null_ls = require("null-ls")
+          null_ls.setup({
+            sources = {
+              null_ls.builtins.formatting.prettier,
+              null_ls.builtins.formatting.black,
+              -- Add more formatters/linters as needed
+            },
+            -- Optional settings:
+            on_attach = function(client, bufnr)
+              if client.supports_method("textDocument/formatting") then
+                vim.api.nvim_clear_auto_create_autocmd("BufWritePre", {
+                  group = augroup,
+                  buffer = bufnr,
+                  callback = function()
+                    vim.lsp.buf.format({ bufnr = bufnr })
+                  end,
+                })
+              end
+            end,
+          })
+        end
+      },
     "nvim-lua/plenary.nvim",
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
     {
@@ -96,7 +121,7 @@ return {
         "nvim-lua/plenary.nvim",
       },
     },
-    { "hrsh7th/cmp-nvim-lsp" },
+
     {
       "L3MON4D3/LuaSnip",
       -- follow latest release.

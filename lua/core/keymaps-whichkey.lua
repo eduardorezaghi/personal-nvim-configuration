@@ -84,7 +84,6 @@ api.nvim_set_keymap('n', '<leader>gb', '<cmd>lua require"gitsigns".blame_line{fu
 --- Toggle diff view
 api.nvim_set_keymap('n', '<leader>gd', '<cmd>lua require"gitsigns".diffthis()<CR>', { noremap = true })
 
-
 -- Whichkey setup
 local wk = require("which-key")
 -- Create the following mappings:
@@ -94,6 +93,8 @@ local wk = require("which-key")
 -- <leader>fb - Find open buffers
 -- <leader>fh - Find help tags
 -- <leader>fo - Find old files
+-- <leader>uc - Change colorscheme
+-- <leader>r - Show registers
 -- <leader>gg - Lazygit
 -- <leader>nn - NvimTreeToggle
 -- <leader>nr - NvimTreeRefresh
@@ -103,6 +104,7 @@ wk.register({
     ["<leader>"] = {
         name = "+Leader",
         ["c"] = { "<cmd>Copilot<cr>", "Copilot" },
+		["e"] = { "<cmd>Telescope file_browser<cr>", "File browser" },
     },
     ["<leader>e"] = {
         name = "+Explorer",
@@ -115,6 +117,8 @@ wk.register({
 		["b"] = { "<cmd>Telescope buffers<cr>", "Find open buffers" },
 		["h"] = { "<cmd>Telescope help_tags<cr>", "Find help tags" },
 		["o"] = { "<cmd>Telescope oldfiles<cr>", "Find old files" },
+		["c"] = { "<cmd>Telescope colorscheme<cr>", "Change colorscheme" },
+		["r"] = { "<cmd>Telescope registers<cr>", "Show registers" },
 	},
 	["<leader>g"] = {
 		name = "+Git",
