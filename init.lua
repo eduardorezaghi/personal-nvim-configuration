@@ -12,28 +12,33 @@ local fn = vim.fn
 local loop = vim.loop
 local opt = vim.opt
 
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+opt.termguicolors = true-- optionally enable 24-bit RGB color support
+
 -- Map leader key to space
 g.mapleader = ' '
 
 -- Lazy.nvim setup
-local lazypath = fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not loop.fs_stat(lazypath) then
-  fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-opt.rtp:prepend(lazypath)
+require('core.lazy')
 
--- Load the plugin, from lua/plugins.lua
-require("lazy").setup("plugins")
 --------------------------------------------------------------------------------
 -- Load the rest of the configurations
-require('core.keymaps-whichkey')
 require('core.options')
-require('plugins.unified')
-require('plugins.lsp.formatters')
+require('core.keymaps')
+require('plugins.whichkey')
+-- require('plugins.unified')
+require('plugins.treesitter')
+require('plugins.nvimtree')
+require('plugins.telescope')
+require('plugins.nvim-cmp')
+require('plugins.vim-visual-multi')
+require('plugins.vim-fugitive')
+require('plugins.gitsigns')
+require('plugins.lazygit')
+require('plugins.lualine')
+
+require('plugins.mason')
+-- require('plugins.lsp.formatters')
+
+require('core.keymaps-whichkey')

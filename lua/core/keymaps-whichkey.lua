@@ -1,5 +1,6 @@
 local api = vim.api
 
+
 -- Neovim API configuration.
 -- NVIM remap files
 api.nvim_set_keymap('n', '<C-f>', ':Files<CR>', { noremap = true })
@@ -14,7 +15,7 @@ api.nvim_set_keymap('v', '<A-k>', ':m \'<-2<CR>gv=gv', { noremap = true })
 
 -- Telescope
 api.nvim_set_keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true })
-api.nvim_set_keymap('n', '<leader>e', '<cmd>Telescope file_browser<cr>', { noremap = true })
+api.nvim_set_keymap('n', '<leader>fe', '<cmd>Telescope file_browser<cr>', { noremap = true })
 api.nvim_set_keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { noremap = true })
 api.nvim_set_keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { noremap = true })
 api.nvim_set_keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true })
@@ -42,7 +43,7 @@ api.nvim_set_keymap('n', '<C-q>', ':close<CR>', { noremap = true })
 --------------------------------------------------------------------------------------------------------------
 
 -- NVIM Tree
-api.nvim_set_keymap('n', '<leader>nn', '<cmd>NvimTreeToggle<cr>', { noremap = true })
+api.nvim_set_keymap('n', '<leader>e', '<cmd>NvimTreeToggle<cr>', { noremap = true })
 api.nvim_set_keymap('n', '<leader>nr', '<cmd>NvimTreeRefresh<cr>', { noremap = true })
 api.nvim_set_keymap('n', '<leader>nf', '<cmd>NvimTreeFindFile<cr>', { noremap = true })
 
@@ -65,7 +66,8 @@ api.nvim_set_keymap('n', '<leader>ws', '<cmd>lua vim.lsp.buf.workspace_symbol()<
 -- LSP Saga
 api.nvim_set_keymap('n', 'gh', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<leader>ca', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', { noremap = true })
-api.nvim_set_keymap('v', '<leader>ca', '<cmd><C-U>lua require("lspsaga.codeaction").range_code_action()<CR>', { noremap = true })
+api.nvim_set_keymap('v', '<leader>ca', '<cmd><C-U>lua require("lspsaga.codeaction").range_code_action()<CR>',
+    { noremap = true })
 
 
 -- Gitsign
@@ -100,39 +102,28 @@ local wk = require("which-key")
 -- <leader>nr - NvimTreeRefresh
 -- <leader>nf - NvimTreeFindFile
 
-wk.register({
-    ["<leader>"] = {
-        name = "+Leader",
-        ["c"] = { "<cmd>Copilot<cr>", "Copilot" },
-		["e"] = { "<cmd>Telescope file_browser<cr>", "File browser" },
-    },
-    ["<leader>e"] = {
-        name = "+Explorer",
-        ["e"] = { "<cmd>Telescope file_browser<cr>", "File browser" },
-    },
-	["<leader>f"] = {
-		name = "+Find",
-		["f"] = { "<cmd>Telescope find_files<cr>", "Find file" },
-		["g"] = { "<cmd>Telescope live_grep<cr>", "Find string in files" },
-		["b"] = { "<cmd>Telescope buffers<cr>", "Find open buffers" },
-		["h"] = { "<cmd>Telescope help_tags<cr>", "Find help tags" },
-		["o"] = { "<cmd>Telescope oldfiles<cr>", "Find old files" },
-		["c"] = { "<cmd>Telescope colorscheme<cr>", "Change colorscheme" },
-		["r"] = { "<cmd>Telescope registers<cr>", "Show registers" },
-	},
-	["<leader>g"] = {
-		name = "+Git",
-		["g"] = { "<cmd>LazyGit<cr>", "Lazygit" },
-		["s"] = { "<cmd>lua require'gitsigns'.stage_hunk()<cr>", "Stage hunk" },
-		["u"] = { "<cmd>lua require'gitsigns'.undo_stage_hunk()<cr>", "Undo stage hunk" },
-		["p"] = { "<cmd>lua require'gitsigns'.preview_hunk()<cr>", "Preview hunk" },
-		["b"] = { "<cmd>lua require'gitsigns'.blame_line()<cr>", "Blame line" },
-	},
-	["<leader>n"] = {
-		name = "+NvimTree",
-		["n"] = { "<cmd>NvimTreeToggle<cr>", "NvimTreeToggle" },
-		["r"] = { "<cmd>NvimTreeRefresh<cr>", "NvimTreeRefresh" },
-		["f"] = { "<cmd>NvimTreeFindFile<cr>", "NvimTreeFindFile" },
-	},
- })
-
+wk.add({
+    { "<leader>",   group = "Leader" },
+    { "<leader>c",  "<cmd>Copilot<cr>",                                 desc = "Copilot" },
+    { "<leader>e",  "<cmd>Telescope file_browser<cr>",                  desc = "File browser" },
+    { "<leader>e",  group = "Explorer" },
+    { "<leader>ee", "<cmd>Telescope file_browser<cr>",                  desc = "File browser" },
+    { "<leader>f",  group = "Find" },
+    { "<leader>fb", "<cmd>Telescope buffers<cr>",                       desc = "Find open buffers" },
+    { "<leader>fc", "<cmd>Telescope colorscheme<cr>",                   desc = "Change colorscheme" },
+    { "<leader>ff", "<cmd>Telescope find_files<cr>",                    desc = "Find file" },
+    { "<leader>fg", "<cmd>Telescope live_grep<cr>",                     desc = "Find string in files" },
+    { "<leader>fh", "<cmd>Telescope help_tags<cr>",                     desc = "Find help tags" },
+    { "<leader>fo", "<cmd>Telescope oldfiles<cr>",                      desc = "Find old files" },
+    { "<leader>fr", "<cmd>Telescope registers<cr>",                     desc = "Show registers" },
+    { "<leader>g",  group = "Git" },
+    { "<leader>gb", "<cmd>lua require'gitsigns'.blame_line()<cr>",      desc = "Blame line" },
+    { "<leader>gg", "<cmd>LazyGit<cr>",                                 desc = "Lazygit" },
+    { "<leader>gp", "<cmd>lua require'gitsigns'.preview_hunk()<cr>",    desc = "Preview hunk" },
+    { "<leader>gs", "<cmd>lua require'gitsigns'.stage_hunk()<cr>",      desc = "Stage hunk" },
+    { "<leader>gu", "<cmd>lua require'gitsigns'.undo_stage_hunk()<cr>", desc = "Undo stage hunk" },
+    { "<leader>n",  group = "NvimTree" },
+    { "<leader>nf", "<cmd>NvimTreeFindFile<cr>",                        desc = "NvimTreeFindFile" },
+    { "<leader>nn", "<cmd>NvimTreeToggle<cr>",                          desc = "NvimTreeToggle" },
+    { "<leader>nr", "<cmd>NvimTreeRefresh<cr>",                         desc = "NvimTreeRefresh" },
+})
