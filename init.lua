@@ -8,8 +8,6 @@
 
 --------------------------------------------------------------------------------
 local g = vim.g
-local fn = vim.fn
-local loop = vim.loop
 local opt = vim.opt
 
 g.loaded_netrw = 1
@@ -44,6 +42,7 @@ require("plugins.todo")
 require("plugins.trouble")
 require("plugins.indent-blankline")
 require("plugins.formatters")
+require("plugins.tabs")
 
 require("plugins.lsp.mason")
 
