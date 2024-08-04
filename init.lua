@@ -19,13 +19,11 @@ g.mapleader = " "
 
 -- Lazy.nvim setup
 require("core.lazy")
-
 --------------------------------------------------------------------------------
 -- Load the rest of the configurations
 require("core.options")
 require("core.keymaps")
 require("plugins.whichkey")
--- require('plugins.unified')
 require("plugins.treesitter")
 require("plugins.nvimtree")
 require("plugins.telescope")
@@ -44,6 +42,7 @@ require("plugins.indent-blankline")
 require("plugins.formatters")
 require("plugins.tabs")
 
+-- LSP specific.
 require("plugins.lsp.mason")
 
 require("core.keymaps-whichkey")
