@@ -14,31 +14,37 @@ local opt = vim.opt
 
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
-opt.termguicolors = true-- optionally enable 24-bit RGB color support
+opt.termguicolors = true -- optionally enable 24-bit RGB color support
 
 -- Map leader key to space
-g.mapleader = ' '
+g.mapleader = " "
 
 -- Lazy.nvim setup
-require('core.lazy')
+require("core.lazy")
 
 --------------------------------------------------------------------------------
 -- Load the rest of the configurations
-require('core.options')
-require('core.keymaps')
-require('plugins.whichkey')
+require("core.options")
+require("core.keymaps")
+require("plugins.whichkey")
 -- require('plugins.unified')
-require('plugins.treesitter')
-require('plugins.nvimtree')
-require('plugins.telescope')
-require('plugins.nvim-cmp')
-require('plugins.vim-visual-multi')
-require('plugins.vim-fugitive')
-require('plugins.gitsigns')
-require('plugins.lazygit')
-require('plugins.lualine')
+require("plugins.treesitter")
+require("plugins.nvimtree")
+require("plugins.telescope")
+require("plugins.nvim-cmp")
+require("plugins.vim-visual-multi")
+require("plugins.vim-fugitive")
+require("plugins.gitsigns")
+require("plugins.lazygit")
+require("plugins.lualine")
+require("plugins.surround")
+require("plugins.session")
+require("plugins.autopairs")
+require("plugins.todo")
+require("plugins.trouble")
+require("plugins.indent-blankline")
+require("plugins.formatters")
 
-require('plugins.mason')
--- require('plugins.lsp.formatters')
+require("plugins.lsp.mason")
 
-require('core.keymaps-whichkey')
+require("core.keymaps-whichkey")
