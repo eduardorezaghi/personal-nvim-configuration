@@ -118,11 +118,35 @@ return {
           root_dir = lspconfig.util.root_pattern("pom.xml", "gradle.build"),
         })
       end,
-      ["ruff_lsp"] = function()
-        -- configure ruff language server
-        lspconfig["ruff_lsp"].setup({
+      ["pyright"] = function() -- configure python language server
+        lspconfig["pyright"].setup({
           capabilities = capabilities,
           filetypes = { "python" },
+          settings = {
+            pyright = {
+              disableOrganizeImports = true,
+              disableTaggedHints = true,
+            },
+          },
+          python = {
+            analysis = {
+              ignore = { "*" },
+              diagnosticSeverityOverrides = {
+                reportUndefinedVariable = "hint",
+              },
+            },
+          },
+        })
+      end,
+      ["ruff"] = function() -- configure ruff language server
+        local on_attach = function(client, bufnr)
+          if client.name == "ruff" then
+            -- Disable hover
+            client.server_capabilities.hoverProvider = false
+          end
+        end
+        lspconfig["ruff"].setup({
+          on_attach = on_attach,
         })
       end,
     })

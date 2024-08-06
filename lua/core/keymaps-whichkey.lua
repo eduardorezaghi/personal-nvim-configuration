@@ -71,19 +71,29 @@ keymap.set("n", "<A-c>", "<Cmd>BufferClose<CR>", { noremap = true, desc = "Close
 -- Magic buffer-picking mode
 keymap.set("n", "<C-p>", "<Cmd>BufferPick<CR>", { noremap = true, desc = "Magic buffer-picking mode" })
 -- Sort automatically by...
-keymap.set("n", "<Space>bb", "<Cmd>BufferOrderByBufferNumber<CR>", { noremap = true, desc = "Sort buffers by buffer number" })
+keymap.set(
+  "n",
+  "<Space>bb",
+  "<Cmd>BufferOrderByBufferNumber<CR>",
+  { noremap = true, desc = "Sort buffers by buffer number" }
+)
 keymap.set("n", "<Space>bn", "<Cmd>BufferOrderByName<CR>", { noremap = true, desc = "Sort buffers by name" })
 keymap.set("n", "<Space>bd", "<Cmd>BufferOrderByDirectory<CR>", { noremap = true, desc = "Sort buffers by directory" })
 keymap.set("n", "<Space>bl", "<Cmd>BufferOrderByLanguage<CR>", { noremap = true, desc = "Sort buffers by language" })
-keymap.set("n", "<Space>bw", "<Cmd>BufferOrderByWindowNumber<CR>", { noremap = true, desc = "Sort buffers by window number" })
-
+keymap.set(
+  "n",
+  "<Space>bw",
+  "<Cmd>BufferOrderByWindowNumber<CR>",
+  { noremap = true, desc = "Sort buffers by window number" }
+)
 
 --------------------------------------------------------------------------------------------------------------
 
 -- NVIM Tree
 keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<cr>", { noremap = true, desc = "Toggle NvimTree" })
-keymap.set("n", "<leader>nr", "<cmd>NvimTreeRefresh<cr>", { noremap = true, desc = "Refresh NvimTree" })
-keymap.set("n", "<leader>nf", "<cmd>NvimTreeFindFile<cr>", { noremap = true, desc = "Find file in NvimTree" })
+keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<cr>", { noremap = true, desc = "Refresh NvimTree" })
+keymap.set("n", "<leader>ef", "<cmd>NvimTreeFindFile<cr>", { noremap = true, desc = "Find file in NvimTree" })
+keymap.set("n", "<leader>en", "<cmd>NvimTreeFocus<cr>", { noremap = true, desc = "Focus NvimTree" })
 
 -- Copilot
 keymap.set("n", "<leader>cc", "<cmd>Copilot<cr>", { noremap = true, desc = "Invoke Copilot" })
