@@ -5,15 +5,19 @@ local cmd = vim.cmd
 -- Disable netrw
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
-vim.g.clipboard = "unnamedplus"
+g.clipboard = "unnamedplus"
 -- Uses Neovim opt feature to define clipboard.
-vim.opt.clipboard:append("unnamedplus")
+opt.clipboard:append("unnamedplus")
 
 -- Base VIM configuration.
+opt.expandtab = true -- Use spaces instead of tabs
 opt.softtabstop = 2 -- Indent by 2 spaces when hitting tab
 opt.shiftwidth = 4 -- Indent by 4 spaces when auto-indenting
 opt.tabstop = 4 -- Show existing tab with 4 spaces width
-vim.opt.wrap = false -- Wrap lines
+opt.wrap = false -- Wrap lines
+opt.smartindent = true -- Auto-indent new lines
+opt.breakindent = true -- Indent wrapped lines
+opt.fileencoding = "utf-8" -- The encoding written to file
 
 opt.cursorline = true -- Highlight the current line
 opt.cursorcolumn = true -- Highlight the current column
@@ -30,7 +34,7 @@ opt.autoindent = true -- Automatically indent new lines
 opt.backup = false -- Disable backup files
 opt.laststatus = 2 -- Always show the status line
 opt.wildmenu = true -- Enable enhanced command-line completion
-vim.opt.backspace = "indent,eol,start" -- Allow backspacing over everything in insert mode
+opt.backspace = "indent,eol,start" -- Allow backspacing over everything in insert mode
 
 -- Search options
 opt.incsearch = true -- Incremental search
@@ -50,7 +54,7 @@ opt.number = true
 opt.relativenumber = true
 
 -- Colorscheme settings.
-vim.cmd([[colorscheme tokyonight]])
+cmd([[colorscheme tokyonight]])
 opt.background = "dark"
 
 opt.filetype = "on"
