@@ -19,7 +19,7 @@ return {
         ensure_installed = {
           "eslint",
           "ruff_lsp",
-          "java_language_server",
+          "jdtls",
           "lua_ls",
         },
       })
@@ -28,6 +28,8 @@ return {
         ensure_installed = {
           "ruff",
           "rust-analyzer",
+          "java-debug-adapter",
+          "java-test",
           "isort",
           "prettier",
           "stylua",
