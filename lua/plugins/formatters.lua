@@ -15,6 +15,7 @@ return {
         liquid = { "prettier" },
         lua = { "stylua" },
         python = { "isort", "ruff" },
+        go = { "gofmt", "goimports" },
       },
       format_on_save = {
         lsp_fallback = true,

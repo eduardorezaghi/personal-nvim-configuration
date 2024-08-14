@@ -4,13 +4,9 @@ return {
     "lewis6991/gitsigns.nvim",
     "nvim-tree/nvim-web-devicons",
   },
-  config = function()
-    local barbar = require("barbar")
-    barbar.setup({
-      options = {
-        show_tab_indicators = true,
-        insert_at_end = true,
-      },
-    })
+  init = function()
+    vim.g.barbar_auto_setup = false
   end,
+  opts = {},
+  version = "^1.1.0",
 }

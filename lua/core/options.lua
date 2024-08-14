@@ -15,7 +15,6 @@ opt.softtabstop = 2 -- Indent by 2 spaces when hitting tab
 opt.shiftwidth = 4 -- Indent by 4 spaces when auto-indenting
 opt.tabstop = 4 -- Show existing tab with 4 spaces width
 opt.wrap = false -- Wrap lines
-opt.smartindent = true -- Auto-indent new lines
 opt.breakindent = true -- Indent wrapped lines
 opt.fileencoding = "utf-8" -- The encoding written to file
 
@@ -30,7 +29,7 @@ opt.history = 1000 -- Keep a history of 1000 commands
 opt.ruler = true -- Show the cursor position all the time
 opt.relativenumber = true -- Show line numbers relative to the current line
 opt.mouse = "a" -- Enable mouse support
-opt.autoindent = true -- Automatically indent new lines
+opt.smartindent = true -- Auto-indent new lines
 opt.backup = false -- Disable backup files
 opt.laststatus = 2 -- Always show the status line
 opt.wildmenu = true -- Enable enhanced command-line completion
@@ -41,6 +40,12 @@ opt.incsearch = true -- Incremental search
 opt.hlsearch = true -- Highlight search results
 opt.ignorecase = true -- Ignore case when searching
 opt.smartcase = true -- Ignore case when searching, unless an uppercase letter is used
+
+-- Folding
+vim.o.foldcolumn = "1" -- Show fold column
+vim.o.foldlevel = 99 -- Start with all folds open
+vim.o.foldlevelstart = 99 -- Start with all folds open
+vim.o.foldenable = true -- Enable folding
 
 cmd([[syntax on]]) -- Enable syntax highlighting
 cmd([[filetype plugin indent on]]) -- Enable filetype-specific plugins and indenting

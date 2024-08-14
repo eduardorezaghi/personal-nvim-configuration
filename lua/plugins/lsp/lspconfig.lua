@@ -151,6 +151,21 @@ return {
           on_attach = on_attach,
         })
       end,
+      ["eslint"] = function()
+        -- configure eslint language server
+        lspconfig["eslint"].setup({
+          capabilities = capabilities,
+          filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+        })
+      end,
+      ["go"] = function()
+        lspconfig["gopls"].setup({
+          capabilities = capabilities,
+          cmd = { "gopls", "serve" },
+          filetypes = { "go" },
+          root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
+        })
+      end,
     })
   end,
 }

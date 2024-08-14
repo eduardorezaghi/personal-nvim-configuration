@@ -87,6 +87,10 @@ keymap.set(
   { noremap = true, desc = "Sort buffers by window number" }
 )
 
+-- nvim-ufo (folding)
+keymap.set("n", "zR", require("ufo").openAllFolds, { noremap = true, desc = "Open all folds" })
+keymap.set("n", "zM", require("ufo").closeAllFolds, { noremap = true, desc = "Close all folds" })
+
 --------------------------------------------------------------------------------------------------------------
 
 -- NVIM Tree

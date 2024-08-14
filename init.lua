@@ -43,6 +43,7 @@ require("plugins.formatters")
 require("plugins.tabs")
 
 -- LSP specific.
+require("plugins.lsp.lspsaga")
 require("plugins.lsp.mason")
 
 require("core.keymaps-whichkey")

@@ -17,10 +17,11 @@ return {
 
       mason_lspconfig.setup({
         ensure_installed = {
-          "eslint",
+          -- "eslint-lsp",
           "ruff_lsp",
           "jdtls",
           "lua_ls",
+          "gopls",
         },
       })
 
@@ -28,6 +29,7 @@ return {
         ensure_installed = {
           "ruff",
           "rust-analyzer",
+          "eslint_d",
           "java-debug-adapter",
           "java-test",
           "isort",
